@@ -1,0 +1,4 @@
+src/generated
+.venv/
+.env/
+node_modules/

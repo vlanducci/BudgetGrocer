@@ -1,0 +1,20 @@
+[00:00:01.560] Server  LOG     ✓ Ready in 1163ms
+[00:00:01.582] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:01.582] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:01.582] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:01.582] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.177] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:08.021] Server  LOG     ERROR: Error: Command failed: .venv\Scripts\python.exe scraper.py
+Traceback (most recent call last):
+  File "C:\Users\viola\Desktop\Random\Code\BudgetGrocer\BudgetGrocer\scraper.py", line 13, in <module>
+    driver = uc.Chrome()
+             ^^^^^^^^^^^
+  File "C:\Users\viola\Desktop\Random\Code\BudgetGrocer\BudgetGrocer\.venv\Lib\site-packages\undetected_chromedriver\__init__.py", line 258, in __init__
+    self.patcher.auto()
+  File "C:\Users\viola\Desktop\Random\Code\BudgetGrocer\BudgetGrocer\.venv\Lib\site-packages\undetected_chromedriver\patcher.py", line 178, in auto
+    self.unzip_package(self.fetch_package())
+  File "C:\Users\viola\Desktop\Random\Code\BudgetGrocer\BudgetGrocer\.venv\Lib\site-packages\undetected_chromedriver\patcher.py", line 310, in unzip_package
+    os.rename(os.path.join(self.zip_path, exe_path), self.executable_path)
+FileExistsError: [WinError 183] Cannot create a file when that file already exists: 'C:\\Users\\viola\\appdata\\roaming\\undetected_chromedriver\\undetected\\chromedriver-win32\\chromedriver.exe' -> 'C:\\Users\\viola\\appdata\\roaming\\undetected_chromedriver\\undetected_chromedriver.exe'
+
+[00:00:08.022] Server  LOG     STDERR: "Traceback (most recent call last):\r\n  File \"C:\\Users\\viola\\Desktop\\Random\\Code\\BudgetGrocer\\BudgetGrocer\\scraper.py\", line 13, in <module>\r\n    driver = uc.Chrome()\r\n             ^^^^^^^^^^^\r\n  File \"C:\\Users\\viola\\Desktop\\Random\\Code\\BudgetGrocer\\BudgetGrocer\\.venv\\Lib\\site-packages\\undetected_chromedriver\\__init__.py\", line 258, in __init__\r\n    self.patcher.auto()\r\n  File \"C:\\Users\\viola\\Desktop\\Random\\Code\\BudgetGrocer\\BudgetGrocer\\.venv\\Lib\\site-packages\\undetected_chromedriver\\patcher.py\", line 178, in auto\r\n    self.unzip_package(self.fetch_package())\r\n  File \"C:\\Users\\viola\\Desktop\\Random\\Code\\BudgetGrocer\\BudgetGrocer\\.venv\\Lib\\site-packages\\undetected_chromedriver\\patcher.py\", line 310, in unzip_package\r\n    os.rename(os.path.join(self.zip_path, exe_path), self.executable_path)\r\nFileExistsError: [WinError 183] Cannot create a file when that file already exists: 'C:\\\\Users\\\\viola\\\\appdata\\\\roaming\\\\undetected_chromedriver\\\\undetected\\\\chromedriver-win32\\\\chromedriver.exe' -> 'C:\\\\Users\\\\viola\\\\appdata\\\\roaming\\\\undetected_chromedriver\\\\undetected_chromedriver.exe'\r\n"

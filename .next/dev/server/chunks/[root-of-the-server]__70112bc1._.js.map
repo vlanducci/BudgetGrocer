@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 40, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/viola/Desktop/Random/Code/BudgetGrocer/BudgetGrocer/src/app/api/scrape/route.js"],"sourcesContent":["\r\n\r\nexport default function Home() {\r\n  const runScraper = async () => {\r\n    await fetch(\"/api/scrape\", { method: \"POST\" })\r\n  }\r\n\r\n  return (\r\n    <div className=\"min-h-screen flex items-center justify-center\">\r\n      <button onClick={runScraper}>\r\n        Run Python Scraper\r\n      </button>\r\n    </div>\r\n  )\r\n}"],"names":[],"mappings":";;;;;;AAEe,SAAS;IACtB,MAAM,aAAa;QACjB,MAAM,MAAM,eAAe;YAAE,QAAQ;QAAO;IAC9C;IAEA,qBACE,gPAAC;QAAI,WAAU;kBACb,cAAA,gPAAC;YAAO,SAAS;sBAAY;;;;;;;;;;;AAKnC"}}]
+}
