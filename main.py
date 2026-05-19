@@ -14,11 +14,47 @@ driver = uc.Chrome()
 
 woolworths_url = f"https://www.woolworths.com.au/"
 coles_url = f"https://www.coles.com.au/"
+aldi_url = f"https://www.aldi.com.au/"
 
 coles_items = []
 woolworths_items = []
+aldi_items = []
 
 item = "cherry tomato"
+
+def aldi():
+  # Load the URL
+  driver.get(aldi_url)
+
+  # Optional wait to ensure page loads
+  wait = WebDriverWait(driver, 15)
+
+  # wait for search to load
+  search = wait.until(EC.element_to_be_clickable((By.ID, "search-bar-input")))
+
+  search.click()
+
+  search.send_keys(item)
+  time.sleep(1)
+
+  search.send_keys(Keys.ENTER)
+
+  wait.until(EC.presence_of_element_located((By.CLASS_NAME, "product-grid")))
+  time.sleep(1)
+
+  products = driver.find_elements(By.CSS_SELECTOR, "a.product-tile__link")
+
+  for product in products[0:1]:
+    # find price element inside shadow DOM
+    price = product.find_element(By.CLASS_NAME, "base-price__regular")
+
+    # find name element inside shadow DOM
+    name = product.find_element(By.CLASS_NAME, "product-tile__name")
+
+    aldi_items.append((name.text, price.text))
+  
+  aldi_cheapest = min(aldi_items, key=lambda x: x[1])
+  print(f"Cheapest item at Aldi: {aldi_cheapest[0]} for {aldi_cheapest[1]}")
 
 def coles():
   # Load the URL
@@ -96,8 +132,7 @@ def woolworths():
   woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
   print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
 
-coles()
-woolworths()
+aldi()
 
 
 # woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
