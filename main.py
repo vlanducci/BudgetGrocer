@@ -36,11 +36,11 @@ if temp == "1":
   search.send_keys(item)
   driver.switch_to.active_element.send_keys(Keys.ENTER)
 
-  sort = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiSelect-root.css-vrsrqt")))
-  sort.click()
+  # sort = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiSelect-root.css-vrsrqt")))
+  # sort.click()
 
-  low = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='relevance']")))
-  low.click()
+  # low = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='unitPriceAscending']")))
+  # low.click()
 
   wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='product-tile']")))
 
