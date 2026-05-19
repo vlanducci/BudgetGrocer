@@ -15,87 +15,92 @@ driver = uc.Chrome()
 woolworths_url = f"https://www.woolworths.com.au/"
 coles_url = f"https://www.coles.com.au/"
 
+coles_items = []
+woolworths_items = []
+
 item = "cherry tomato"
 
-# temp = input("1 or 2: ")
-temp = "2"
+# Load the URL
+driver.get(coles_url)
 
-if temp == "1": 
-  # Load the URL
-  driver.get(coles_url)
+# Optional wait to ensure page loads
+wait = WebDriverWait(driver, 15)
 
-  # Optional wait to ensure page loads
-  wait = WebDriverWait(driver, 15)
+# wait for search to load
+search = wait.until(EC.element_to_be_clickable((By.ID, "search-text-input")))
+driver.execute_script("arguments[0].focus();", search)
 
-  # wait for search to load
-  search = wait.until(EC.element_to_be_clickable((By.ID, "search-text-input")))
-  driver.execute_script("arguments[0].focus();", search)
+search = driver.find_element(By.ID, "search-text-input")
 
-  search = driver.find_element(By.ID, "search-text-input")
+search.send_keys(item)
+driver.switch_to.active_element.send_keys(Keys.ENTER)
 
-  search.send_keys(item)
-  driver.switch_to.active_element.send_keys(Keys.ENTER)
+# sort = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiSelect-root.css-vrsrqt")))
+# sort.click()
 
-  # sort = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-colorPrimary.MuiInputBase-formControl.MuiSelect-root.css-vrsrqt")))
-  # sort.click()
+# low = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='unitPriceAscending']")))
+# low.click()
 
-  # low = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='unitPriceAscending']")))
-  # low.click()
+wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='product-tile']")))
 
-  wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='product-tile']")))
+time.sleep(1)
 
-  time.sleep(1)
+products = driver.find_elements(By.CSS_SELECTOR, "[data-testid='product-tile']")
 
-  products = driver.find_elements(By.CSS_SELECTOR, "[data-testid='product-tile']")
+for product in products[0:3]:  
+  # find price element inside shadow DOM
+  price = product.find_element(By.CLASS_NAME, "price__value")
 
-  for product in products:  
-    # find price element inside shadow DOM
-    price = product.find_element(By.CLASS_NAME, "price__value")
+  # find name element inside shadow DOM
+  name = product.find_element(By.CLASS_NAME, "product__title")
 
-    # find name element inside shadow DOM
-    name = product.find_element(By.CLASS_NAME, "product__title")
+  coles_items.append((name.text, price.text))
 
-    print(name.text)
-    print(price.text)
 
-else:
-  # Load the URL
-  driver.get(woolworths_url)
 
-  # Optional wait to ensure page loads
-  wait = WebDriverWait(driver, 15)
 
-  # wait for search to load
-  search = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[type='search']")))
+# Load the URL
+driver.get(woolworths_url)
 
-  search.click()
+# Optional wait to ensure page loads
+wait = WebDriverWait(driver, 15)
 
-  search.send_keys(item)
+# wait for search to load
+search = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[type='search']")))
 
-  search.send_keys(Keys.ENTER)
+search.click()
 
-  # sort = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".chip.chip-menu.chip-secondary")))
-  # sort.click()
+search.send_keys(item)
 
-  # low = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".wowRadio-label[for='singleSelectionMenuItem-5']")))
-  # low.click()
+search.send_keys(Keys.ENTER)
 
-  wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "wc-product-tile")))
-  time.sleep(1)
+# sort = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".chip.chip-menu.chip-secondary")))
+# sort.click()
 
-  products = driver.find_elements(By.CSS_SELECTOR, "wc-product-tile")
-  
-  for product in products:
-    # find shadow root - entry root to a shadow DOM - a web standard that allows you to attach a hidden, separate DOM tree to an element, providing encapsulation for its structure and styles
-    shadow_root = driver.execute_script("return arguments[0].shadowRoot", product)
+# low = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".wowRadio-label[for='singleSelectionMenuItem-5']")))
+# low.click()
 
-    # find price element inside shadow DOM
-    price = shadow_root.find_element(By.CLASS_NAME, "primary")
+wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "wc-product-tile")))
+time.sleep(1)
 
-    # find name element inside shadow DOM
-    name = shadow_root.find_element(By.CLASS_NAME, "title")
+products = driver.find_elements(By.CSS_SELECTOR, "wc-product-tile")
 
-    print(name.text)
-    print(price.text)
+for product in products[0:3]:
+  # find shadow root - entry root to a shadow DOM - a web standard that allows you to attach a hidden, separate DOM tree to an element, providing encapsulation for its structure and styles
+  shadow_root = driver.execute_script("return arguments[0].shadowRoot", product)
 
-  time.sleep(10)
+  # find price element inside shadow DOM
+  price = shadow_root.find_element(By.CLASS_NAME, "primary")
+
+  # find name element inside shadow DOM
+  name = shadow_root.find_element(By.CLASS_NAME, "title")
+  print(name.text, price.text)
+
+  woolworths_items.append((name.text, price.text))
+
+
+woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
+coles_cheapest = min(coles_items, key=lambda x: x[1])
+
+print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
+print(f"Cheapest item at Coles: {coles_cheapest[0]} for {coles_cheapest[1]}")
