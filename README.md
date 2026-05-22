@@ -33,3 +33,6 @@ npx prisma migrate dev --name init
 
 generate client:
 npx prisma generate
+
+
+http://localhost:3000

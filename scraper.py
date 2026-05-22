@@ -20,7 +20,7 @@ coles_items = []
 woolworths_items = []
 aldi_items = []
 
-item = "cherry tomato"
+item = "cockroach bait"
 
 def aldi():
   # Load the URL
@@ -133,7 +133,8 @@ def woolworths():
   print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
 
 aldi()
-
+# coles()
+# woolworths()
 
 # woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
 # coles_cheapest = min(coles_items, key=lambda x: x[1])
