@@ -18,29 +18,6 @@ driver = uc.Chrome(version_main=148)
 
 item = "tomato"
 
-def save_to_db(name, price, store):
-  conn = psycopg.connect(DATABASE_URL)
-  cur = conn.cursor()
-
-  cur.execute(
-    """
-    INSERT INTO "Product" (query, data)
-    VALUES (%s, %s)
-    """,
-    (
-      item,
-      {
-        "name": name,
-        "price": price,
-        "store": store
-      }
-    )
-  )
-
-  conn.commit()
-  cur.close()
-  conn.close()
-
 def aldi():
   aldi_items = []
   # Load the URL
@@ -161,18 +138,3 @@ def woolworths():
   woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
   return woolworths_cheapest
   # print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
-
-async def main():
-  aldi_name, aldi_price = aldi()
-  coles_name, coles_price = coles()
-  wool_name, wool_price = woolworths()
-
-  save_to_db(aldi_name, aldi_price, "Aldi")
-  save_to_db(coles_name, coles_price, "Coles")
-  save_to_db(wool_name, wool_price, "Woolworths")
-
-  driver.quit()
-
-
-if __name__ == "__main__":
-  asyncio.run(main())
