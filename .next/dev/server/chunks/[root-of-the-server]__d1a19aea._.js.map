@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 46, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/viola/Desktop/Random/Code/BudgetGrocer/BudgetGrocer/src/app/api/scrape/route.js"],"sourcesContent":["import { execFile } from \"child_process\";\r\n\r\nexport async function POST() {\r\n  return new Promise((resolve) => {\r\n    execFile(\r\n      \".venv\\\\Scripts\\\\python.exe\",\r\n      [\"scraper.py\"],\r\n      (error, stdout, stderr) => {\r\n        if (error) {\r\n          console.log(\"ERROR:\", error);\r\n          console.log(\"STDERR:\", stderr);\r\n          resolve(Response.json({ error: stderr || error.message }, { status: 500 }));\r\n          return;\r\n        }\r\n\r\n        resolve(Response.json({ result: stdout }));\r\n      }\r\n    );\r\n  });\r\n}"],"names":[],"mappings":";;;;AAAA;;AAEO,eAAe;IACpB,OAAO,IAAI,QAAQ,CAAC;QAClB,IAAA,+HAAQ,EACN,8BACA;YAAC;SAAa,EACd,CAAC,OAAO,QAAQ;YACd,IAAI,OAAO;gBACT,QAAQ,GAAG,CAAC,UAAU;gBACtB,QAAQ,GAAG,CAAC,WAAW;gBACvB,QAAQ,SAAS,IAAI,CAAC;oBAAE,OAAO,UAAU,MAAM,OAAO;gBAAC,GAAG;oBAAE,QAAQ;gBAAI;gBACxE;YACF;YAEA,QAAQ,SAAS,IAAI,CAAC;gBAAE,QAAQ;YAAO;QACzC;IAEJ;AACF"}}]
-}

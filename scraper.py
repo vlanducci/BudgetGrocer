@@ -1,29 +1,50 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-import time
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
+import psycopg
+import os
+from dotenv import load_dotenv
+import asyncio
+import time
 
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 options = webdriver.ChromeOptions()
-driver = uc.Chrome()
+driver = uc.Chrome(version_main=148)
 
-woolworths_url = f"https://www.woolworths.com.au/"
-coles_url = f"https://www.coles.com.au/"
-aldi_url = f"https://www.aldi.com.au/"
+item = "tomato"
 
-coles_items = []
-woolworths_items = []
-aldi_items = []
+def save_to_db(name, price, store):
+  conn = psycopg.connect(DATABASE_URL)
+  cur = conn.cursor()
 
-item = "cockroach bait"
+  cur.execute(
+    """
+    INSERT INTO "Product" (query, data)
+    VALUES (%s, %s)
+    """,
+    (
+      item,
+      {
+        "name": name,
+        "price": price,
+        "store": store
+      }
+    )
+  )
+
+  conn.commit()
+  cur.close()
+  conn.close()
 
 def aldi():
+  aldi_items = []
   # Load the URL
+  aldi_url = f"https://www.aldi.com.au/"
   driver.get(aldi_url)
 
   # Optional wait to ensure page loads
@@ -54,10 +75,14 @@ def aldi():
     aldi_items.append((name.text, price.text))
   
   aldi_cheapest = min(aldi_items, key=lambda x: x[1])
-  print(f"Cheapest item at Aldi: {aldi_cheapest[0]} for {aldi_cheapest[1]}")
+  return aldi_cheapest
+  # print(f"Cheapest item at Aldi: {aldi_cheapest[0]} for {aldi_cheapest[1]}")
 
 def coles():
+  coles_items = []
+
   # Load the URL
+  coles_url = f"https://www.coles.com.au/"
   driver.get(coles_url)
 
   # Optional wait to ensure page loads
@@ -93,10 +118,14 @@ def coles():
     coles_items.append((name.text, price.text))
 
   coles_cheapest = min(coles_items, key=lambda x: x[1])
-  print(f"Cheapest item at Coles: {coles_cheapest[0]} for {coles_cheapest[1]}")
+  return coles_cheapest
+  # print(f"Cheapest item at Coles: {coles_cheapest[0]} for {coles_cheapest[1]}")
 
 def woolworths():
+  woolworths_items = []
+
   # Load the URL
+  woolworths_url = f"https://www.woolworths.com.au/"
   driver.get(woolworths_url)
 
   # Optional wait to ensure page loads
@@ -130,14 +159,20 @@ def woolworths():
     woolworths_items.append((name.text, price.text))
   
   woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
-  print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
+  return woolworths_cheapest
+  # print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
 
-aldi()
-# coles()
-# woolworths()
+async def main():
+  aldi_name, aldi_price = aldi()
+  coles_name, coles_price = coles()
+  wool_name, wool_price = woolworths()
 
-# woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
-# coles_cheapest = min(coles_items, key=lambda x: x[1])
+  save_to_db(aldi_name, aldi_price, "Aldi")
+  save_to_db(coles_name, coles_price, "Coles")
+  save_to_db(wool_name, wool_price, "Woolworths")
 
-# print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
-# print(f"Cheapest item at Coles: {coles_cheapest[0]} for {coles_cheapest[1]}")
+  driver.quit()
+
+
+if __name__ == "__main__":
+  asyncio.run(main())

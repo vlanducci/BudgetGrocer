@@ -1,24 +1,14 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model User { 
-  id    Int     @id @default(autoincrement()) 
-  email String  @unique
-  name  String?
-  posts Post[]
-} 
-
-model Post { 
-  id        Int     @id @default(autoincrement()) 
-  title     String
-  content   String?
-  published Boolean @default(false) 
-  authorId  Int
-  author    User    @relation(fields: [authorId], references: [id]) 
-} 
+model Product {
+  id        Int      @id @default(autoincrement())
+  query     String
+  price     Int
+  createdAt DateTime @default(now())
+}
