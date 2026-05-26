@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 154, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/viola/Desktop/Random/Code/BudgetGrocer/BudgetGrocer/lib/queue.ts"],"sourcesContent":["import \"server-only\";\r\nimport { Queue } from \"bullmq\";\r\nimport IORedis from \"ioredis\";\r\n\r\nconst connection = new IORedis({ host: \"localhost\", port: 6379 });\r\n\r\nexport const queue = new Queue(\"default\", { connection });"],"names":[],"mappings":";;;;AAAA;AACA;AAAA;AACA;;;;AAEA,MAAM,aAAa,IAAI,sJAAO,CAAC;IAAE,MAAM;IAAa,MAAM;AAAK;AAExD,MAAM,QAAQ,IAAI,oKAAK,CAAC,WAAW;IAAE;AAAW"}},
+    {"offset": {"line": 176, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/viola/Desktop/Random/Code/BudgetGrocer/BudgetGrocer/src/app/api/search/route.js"],"sourcesContent":["import \"server-only\";\r\nimport { queue } from \"@/lib/queue\";\r\n\r\nexport async function POST(req) {\r\n  let body;\r\n\r\n  try {\r\n    body = await req.json();\r\n  } catch {\r\n    return Response.json({ error: \"Invalid JSON body\" }, { status: 400 });\r\n  }\r\n\r\n  const query = body?.query;\r\n\r\n  return Response.json({ ok: true, query });\r\n}"],"names":[],"mappings":";;;;AAAA;AACA;;;AAEO,eAAe,KAAK,GAAG;IAC5B,IAAI;IAEJ,IAAI;QACF,OAAO,MAAM,IAAI,IAAI;IACvB,EAAE,OAAM;QACN,OAAO,SAAS,IAAI,CAAC;YAAE,OAAO;QAAoB,GAAG;YAAE,QAAQ;QAAI;IACrE;IAEA,MAAM,QAAQ,MAAM;IAEpB,OAAO,SAAS,IAAI,CAAC;QAAE,IAAI;QAAM;IAAM;AACzC"}}]
+}

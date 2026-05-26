@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+rq
+redis
+selenium
+webdriver-manager
+undetected_chromedriver
+psycopg

@@ -2,7 +2,13 @@
 
 export default function Home() {
   const runScraper = async () => {
-    await fetch("/api/scrape", { method: "POST" })
+    await fetch("/api/search", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ query: "test" })
+    });
   }
 
   return (
