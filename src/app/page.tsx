@@ -35,7 +35,7 @@ export default function Home() {
         <div className="flex items-center justify-center gap-x-4 rounded-xl bg-white p-20 shadow-lg dark:bg-[#FCF7F8]/50">
           <div className="flex flex-col items-center text-center">
 
-            <div className="text-4xl font-bold bg-gradient-to-r from-[#04724D] to-[#8ED081] bg-clip-text text-transparent">
+            <div className="text-center p-2 text-4xl font-bold bg-gradient-to-r from-[#04724D] from-52% to-[#8ED081] to-48% bg-clip-text text-transparent">
               BudgetGrocer
             </div>
 
@@ -47,11 +47,11 @@ export default function Home() {
               <input
                 type="text"
                 placeholder="Search for a product..."
-                className="bg-[#FCF7F8] rounded-full border px-4 py-2"
+                className="dark:text-[#04724D]/70 bg-[#FCF7F8] rounded-full border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#04724D] focus:border-transparent"
               />
 
               <button
-                className="bg-[#8ED081] hover:bg-[#8ED081]/50 rounded-full p-2"
+                className="bg-[#8ED081] hover:bg-[#8ED081]/80 text-[#FCF7F8]  rounded-full p-2"
                 onClick={runScraper}
               >
                 Search

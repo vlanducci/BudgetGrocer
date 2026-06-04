@@ -44,3 +44,8 @@ docker compose up --build
 
 
 .\.venv\Scripts\Activate.ps1
+
+
+
+
+http://localhost:5555

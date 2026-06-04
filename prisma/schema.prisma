@@ -11,24 +11,25 @@ model Product {
   name      String
   createdAt DateTime @default(now())
 
-  prices    Price[]
+  prices Price[]
 }
 
 model Store {
-  id        Int      @id @default(autoincrement())
-  name      String
-  prices    Price[]
+  id   Int    @id @default(autoincrement())
+  name String  @unique
+
+  prices Price[]
 }
 
 model Price {
-  id        Int      @id @default(autoincrement())
-  price     Int
+  id    Int   @id @default(autoincrement())
+  price Float
 
   productId Int
   storeId   Int
 
-  product   Product  @relation(fields: [productId], references: [id])
-  store     Store    @relation(fields: [storeId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+  store   Store   @relation(fields: [storeId], references: [id])
 
   createdAt DateTime @default(now())
 }
