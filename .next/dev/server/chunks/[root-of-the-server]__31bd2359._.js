@@ -72,17 +72,18 @@ async function POST(req) {
             query
         })
     });
+    const data = await res.json();
     if (!res.ok) {
         return Response.json({
-            error: "Python API failed"
+            error: "Python API failed",
+            details: data
         }, {
             status: 500
         });
     }
-    const data = await res.json();
     return Response.json({
         ok: true,
-        job: data
+        data
     });
 }
 }),

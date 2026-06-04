@@ -16,12 +16,15 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 def create_driver():
   options = webdriver.ChromeOptions()
+  options.add_argument("--headless=new")
+  options.add_argument("--no-sandbox")
+  options.add_argument("--disable-dev-shm-usage")
+  options.add_argument("--disable-gpu")
   options.binary_location = "/usr/bin/chromium"
+
   return uc.Chrome(options=options, version_main=148)
 
-item = "tomato"
-
-def aldi(driver):
+def aldi(driver, item):
   aldi_items = []
   # Load the URL
   aldi_url = f"https://www.aldi.com.au/"
@@ -54,11 +57,12 @@ def aldi(driver):
 
     aldi_items.append((name.text, price.text))
   
+  print(aldi_items)
   aldi_cheapest = min(aldi_items, key=lambda x: x[1])
   return aldi_cheapest
   # print(f"Cheapest item at Aldi: {aldi_cheapest[0]} for {aldi_cheapest[1]}")
 
-def coles(driver):
+def coles(driver, item):
   coles_items = []
 
   # Load the URL
@@ -101,7 +105,7 @@ def coles(driver):
   return coles_cheapest
   # print(f"Cheapest item at Coles: {coles_cheapest[0]} for {coles_cheapest[1]}")
 
-def woolworths(driver):
+def woolworths(driver, item):
   woolworths_items = []
 
   # Load the URL
