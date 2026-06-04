@@ -4,11 +4,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
+from selenium.webdriver.common.action_chains import ActionChains
+
 import psycopg
 import os
 from dotenv import load_dotenv
 import asyncio
 import time
+import re
+
 
 load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
@@ -17,34 +21,31 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 def create_driver():
   options = webdriver.ChromeOptions()
   options.add_argument("--headless=new")
+  options.add_argument("--window-size=1920,1080")
+  options.add_argument("--disable-blink-features=AutomationControlled")
+  options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36")
   options.add_argument("--no-sandbox")
   options.add_argument("--disable-dev-shm-usage")
   options.add_argument("--disable-gpu")
-  options.binary_location = "/usr/bin/chromium"
+  # options.binary_location = "/usr/bin/chromium"
 
   return uc.Chrome(options=options, version_main=148)
 
 def aldi(driver, item):
   aldi_items = []
+
   # Load the URL
-  aldi_url = f"https://www.aldi.com.au/"
+  aldi_url = f"https://www.aldi.com.au/results?q={item}"
   driver.get(aldi_url)
 
   # Optional wait to ensure page loads
   wait = WebDriverWait(driver, 15)
 
-  # wait for search to load
-  search = wait.until(EC.element_to_be_clickable((By.ID, "search-bar-input")))
+  wait.until(lambda d: len(d.find_elements(By.CSS_SELECTOR, "a.product-tile__link")) > 0)
 
-  search.click()
-
-  search.send_keys(item)
-  time.sleep(1)
-
-  search.send_keys(Keys.ENTER)
-
-  wait.until(EC.presence_of_element_located((By.CLASS_NAME, "product-grid")))
-  time.sleep(1)
+  wait.until(
+    EC.presence_of_all_elements_located((By.CSS_SELECTOR, "a.product-tile__link"))
+  )
 
   products = driver.find_elements(By.CSS_SELECTOR, "a.product-tile__link")
 
@@ -57,40 +58,24 @@ def aldi(driver, item):
 
     aldi_items.append((name.text, price.text))
   
-  print(aldi_items)
   aldi_cheapest = min(aldi_items, key=lambda x: x[1])
   return aldi_cheapest
-  # print(f"Cheapest item at Aldi: {aldi_cheapest[0]} for {aldi_cheapest[1]}")
 
 def coles(driver, item):
   coles_items = []
 
   # Load the URL
-  coles_url = f"https://www.coles.com.au/"
+  coles_url = f"https://www.coles.com.au/search/products?q={item}"
   driver.get(coles_url)
+  print(driver.page_source[:1000])
 
   # Optional wait to ensure page loads
   wait = WebDriverWait(driver, 15)
 
-  # wait for search to load
-  button = WebDriverWait(driver, 10).until(
-      EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='search-box-search-button']"))
-  )
+  wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "[data-testid='product-tile']")))
 
-  driver.execute_script("arguments[0].click();", button)
 
-  search = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "search-box-select__input")))
-
-  search.send_keys(item)
-  time.sleep(1)
-
-  search.send_keys(Keys.ENTER)
-
-  wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "[data-testid='product-tile']")))
-
-  time.sleep(1)
-
-  products = driver.find_elements(By.CSS_SELECTOR, "[data-testid='product-tile']")
+  products = driver.find_elements(By.CSS_SELECTOR, "a[href*='/product/']")
 
   for product in products[0:2]:  
     # find price element inside shadow DOM
@@ -103,30 +88,18 @@ def coles(driver, item):
 
   coles_cheapest = min(coles_items, key=lambda x: x[1])
   return coles_cheapest
-  # print(f"Cheapest item at Coles: {coles_cheapest[0]} for {coles_cheapest[1]}")
 
 def woolworths(driver, item):
   woolworths_items = []
 
   # Load the URL
-  woolworths_url = f"https://www.woolworths.com.au/"
+  woolworths_url = f"https://www.woolworths.com.au/shop/search/products?searchTerm={item}"
   driver.get(woolworths_url)
 
   # Optional wait to ensure page loads
-  wait = WebDriverWait(driver, 15)
+  wait = WebDriverWait(driver, 30)
 
-  # wait for search to load
-  search = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "input[type='search']")))
-
-  search.click()
-
-  search.send_keys(item)
-  time.sleep(1)
-
-  search.send_keys(Keys.ENTER)
-
-  wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "wc-product-tile")))
-  time.sleep(1)
+  wait.until(lambda d: len(d.find_elements(By.CSS_SELECTOR, "wc-product-tile")) > 0)
 
   products = driver.find_elements(By.CSS_SELECTOR, "wc-product-tile")
 
@@ -144,4 +117,3 @@ def woolworths(driver, item):
   
   woolworths_cheapest = min(woolworths_items, key=lambda x: x[1])
   return woolworths_cheapest
-  # print(f"Cheapest item at Woolworths: {woolworths_cheapest[0]} for {woolworths_cheapest[1]}")
