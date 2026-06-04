@@ -36,3 +36,11 @@ npx prisma generate
 
 
 http://localhost:3000
+
+
+run docker for redis, python api, and worker:
+docker compose up --build
+
+
+
+.\.venv\Scripts\Activate.ps1
