@@ -44,6 +44,21 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$server$2d$only$2f$empty$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/server-only/empty.js [app-route] (ecmascript)");
 ;
+const sleep = (ms)=>new Promise((r)=>setTimeout(r, ms));
+async function waitForResult(jobId) {
+    while(true){
+        const res = await fetch(`http://localhost:5000/results/${jobId}`);
+        const data = await res.json();
+        console.log("poll response:", data, jobId);
+        if (data.status === "finished") {
+            return data.results;
+        }
+        if (data.status === "failed") {
+            throw new Error(data.error);
+        }
+        await new Promise((r)=>setTimeout(r, 1000));
+    }
+}
 async function POST(req) {
     let body;
     try {
@@ -63,7 +78,7 @@ async function POST(req) {
             status: 400
         });
     }
-    const res = await fetch("http://localhost:5000/enqueue", {
+    const enqueueRes = await fetch("http://localhost:5000/enqueue", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -72,19 +87,18 @@ async function POST(req) {
             query
         })
     });
-    const data = await res.json();
-    if (!res.ok) {
+    const enqueueData = await enqueueRes.json();
+    if (!enqueueRes.ok) {
         return Response.json({
             error: "Python API failed",
-            details: data
+            details: enqueueData
         }, {
             status: 500
         });
     }
-    return Response.json({
-        ok: true,
-        data
-    });
+    const jobId = enqueueData.job_id;
+    const results = await waitForResult(jobId);
+    return Response.json(results);
 }
 }),
 ];

@@ -9,16 +9,25 @@ import os
 from dotenv import load_dotenv
 import asyncio
 import time
+from datetime import datetime
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-def get_or_create_product(cur, name):
+def make_product_key(name, store_id):
+  return f"{store_id}:{name.lower().strip()}"
+
+def get_day():
+  return datetime.utcnow().date()
+
+def get_or_create_product(cur, name, store_id):
+  key = make_product_key(name, store_id)
+
   cur.execute(
     """
     SELECT id FROM "Product"
-    WHERE LOWER(name) = LOWER(%s)
+    WHERE key = %s
     """,
-    (name,)
+    (key,)
   )
 
   if row := cur.fetchone():
@@ -26,11 +35,11 @@ def get_or_create_product(cur, name):
 
   cur.execute(
     """
-    INSERT INTO "Product" (name)
-    VALUES (%s)
+    INSERT INTO "Product" (name, key)
+    VALUES (%s, %s)
     RETURNING id
     """,
-    (name,)
+    (name, key)
   )
 
   return cur.fetchone()[0]
@@ -40,14 +49,16 @@ def save_to_db(name, price, store_id):
   conn = psycopg.connect(DATABASE_URL)
   cur = conn.cursor()
 
-  product_id = get_or_create_product(cur, name)
+  product_id = get_or_create_product(cur, name, store_id)
+
+  day = get_day()
 
   cur.execute(
     """
-    INSERT INTO "Price" (price, "productId", "storeId")
-    VALUES (%s, %s, %s)
+    INSERT INTO "Price" (price, "productId", "storeId", day)
+    VALUES (%s, %s, %s, %s)
     """,
-    (price, product_id, store_id)
+    (price, product_id, store_id, day)
   )
 
   conn.commit()
@@ -63,10 +74,10 @@ def get_from_db(query):
     SELECT p.name, pr.price
     FROM "Product" p
     JOIN "Price" pr ON pr."productId" = p.id
-    WHERE LOWER(p.name) = LOWER(%s)
+    WHERE p.name ILIKE %s
     ORDER BY pr."createdAt" DESC
     """,
-    (query,)
+    (f"%{query}%",)
   )
 
   rows = cur.fetchall()

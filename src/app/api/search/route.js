@@ -1,5 +1,25 @@
 import "server-only";
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function waitForResult(jobId) {
+  while (true) {
+    const res = await fetch(`http://localhost:5000/results/${jobId}`);
+    const data = await res.json();
+    console.log("poll response:", data, jobId);
+
+    if (data.status === "finished") {
+      return data.results;
+    }
+
+    if (data.status === "failed") {
+      throw new Error(data.error);
+    }
+
+    await new Promise(r => setTimeout(r, 1000));
+  }
+}
+
 export async function POST(req) {
   let body;
 
@@ -15,7 +35,7 @@ export async function POST(req) {
     return Response.json({ error: "Missing query" }, { status: 400 });
   }
 
-  const res = await fetch("http://localhost:5000/enqueue", {
+  const enqueueRes = await fetch("http://localhost:5000/enqueue", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -23,17 +43,18 @@ export async function POST(req) {
     body: JSON.stringify({ query })
   });
 
-  const data = await res.json();
+  const enqueueData = await enqueueRes.json();
 
-  if (!res.ok) {
-    return Response.json({
-      error: "Python API failed",
-      details: data
-    }, { status: 500 });
+  if (!enqueueRes.ok) {
+    return Response.json(
+      { error: "Python API failed", details: enqueueData },
+      { status: 500 }
+    );
   }
 
-  return Response.json({
-    ok: true,
-    data
-  });
+  const jobId = enqueueData.job_id;
+
+  const results = await waitForResult(jobId);
+
+  return Response.json(results);
 }

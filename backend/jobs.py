@@ -5,7 +5,7 @@ def scrape_job(query):
     existing = get_from_db(query)
 
     if existing:
-        print("exists")
+        print("poll response:", existing)
         return existing
 
     driver = create_driver()
@@ -24,4 +24,7 @@ def scrape_job(query):
     # save_to_db(coles_name, coles_price, 2)
     save_to_db(wool_name, wool_price, 3)
 
+    return get_from_db(query)
+
+def get_results(query):
     return get_from_db(query)

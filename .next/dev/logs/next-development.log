@@ -1,4 +1,58 @@
-[00:00:04.140] Server  LOG     ✓ Ready in 2.7s
-[00:01:29.345] Server  LOG     ○ Compiling / ...
-[00:01:31.311] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:37.269] Browser LOG     {"data":{"job_id":"b591cbf1-e746-4dab-ac56-9fdde5b67eb0"},"ok":true}
+[00:00:02.380] Server  LOG     ✓ Ready in 1697ms
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:02.415] Browser ERROR   unhandledRejection: TypeError: Failed to fetch
+[00:00:03.223] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:11.030] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:12.516] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:14.040] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:15.515] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:17.066] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:18.509] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:20.086] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:21.557] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:23.079] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:24.537] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:26.037] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:27.516] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:29.026] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:30.510] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:31.971] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:33.531] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:35.096] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:37.016] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:38.602] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:40.085] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:41.514] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:43.013] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:44.517] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:46.059] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:47.489] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:48.889] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:50.354] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:51.897] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:53.429] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:54.968] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:56.417] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:57.913] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:00:59.423] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:01:00.932] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:01:02.358] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:01:03.847] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:01:05.269] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:01:06.717] Server  LOG     poll response: {} "d9a2d863-89bd-4f10-a7e7-0a9a442fed8a"
+[00:01:07.751] Server  ERROR   ⨯ TypeError: fetch failed
+[00:01:08.376] Browser ERROR   unhandledRejection: SyntaxError: Failed to execute 'json' on 'Response': Unexpected end of JSON input
+[00:01:38.702] Server  LOG     poll response: {} "583e2fb6-c6df-44e2-890e-46b18c790547"
+[00:01:39.718] Server  LOG     poll response: {} "583e2fb6-c6df-44e2-890e-46b18c790547"
+[00:01:40.731] Server  LOG     poll response: {} "583e2fb6-c6df-44e2-890e-46b18c790547"
+[00:01:40.842] Browser LOG     [{"name":"Gourmet Tomato each","price":0.87},{"name":"Cherry Tomatoes in Tomato Juice 400g","price":1.49}]

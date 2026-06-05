@@ -8,6 +8,7 @@ export default function Home() {
   }
 
   const [results, setResults] = useState<Result[]>([])
+  const [query, setQuery] = useState("")
   
 
   const runScraper = async () => {
@@ -16,17 +17,13 @@ export default function Home() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ query: "tomato" })
+      body: JSON.stringify({ query })
     })
 
     const data = await res.json()
     console.log(data)
 
-    if (Array.isArray(data)) {
-      setResults(data)
-    } else {
-      setResults(data.results ?? [])
-    }
+    setResults(Array.isArray(data) ? data : []);
   }
 
   return (
@@ -46,7 +43,9 @@ export default function Home() {
             <div className="pt-10 flex items-center gap-3">
               <input
                 type="text"
+                value={query}
                 placeholder="Search for a product..."
+                onChange={(e) => setQuery(e.target.value)}
                 className="dark:text-[#04724D]/70 bg-[#FCF7F8] rounded-full border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#04724D] focus:border-transparent"
               />
 
@@ -60,12 +59,11 @@ export default function Home() {
 
             <div className="bg-[#FCF7F8] rounded-lg p-4 mt-4 w-full">
               {results.map((item, i) => (
-                <div key={i} className="text-left border-b py-2">
+                <div key={i}>
                   {item.name} - ${item.price}
                 </div>
               ))}
             </div>
-
           </div>
         </div>
       </div>

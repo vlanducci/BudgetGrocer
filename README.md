@@ -47,5 +47,7 @@ docker compose up --build
 
 
 
-
+npx prisma studio
 http://localhost:5555
+or
+http://localhost:51212/

@@ -9,6 +9,7 @@ datasource db {
 model Product {
   id        Int      @id @default(autoincrement())
   name      String
+  key       String   @unique
   createdAt DateTime @default(now())
 
   prices Price[]
@@ -32,4 +33,8 @@ model Price {
   store   Store   @relation(fields: [storeId], references: [id])
 
   createdAt DateTime @default(now())
+
+  day DateTime
+
+  @@unique([productId, storeId, day])
 }
